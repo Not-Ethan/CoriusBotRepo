@@ -1,0 +1,158 @@
+body {
+  background-color: rgb(53, 59, 66);
+  color: white;
+}
+p {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 14;
+}
+#whatis {
+  max-width: 500px;
+  margin: auto
+}
+#howdo {
+  max-width: 500px;
+  margin: auto
+}
+.center {
+  text-align: center;
+  
+}
+.title {
+  font-family: "Lucida Console", Monaco, monospace;
+}
+.left {
+  animation-duration: 3s;
+  animation-name: slideinL;
+  animation-iteration-count: 1;
+}
+.slideright {
+  animation-duration: 3s;
+  animation-name: slideinR;
+  animation-iteration-count: 1;
+}
+.fade {
+  animation-duration: 4s;
+  animation-name: fadein;
+  animation-iteration-count: 1;
+}
+@keyframes slideinL {
+  0% {
+    margin-left: 100%;
+    opacity: 0%;
+  }
+  99% {
+    opacity: 100%;
+  }
+  100% {
+    margin-left: 0%;
+  }
+}
+
+.fade-in {
+animation: fadeIn ease 3s;
+-webkit-animation: fadeIn ease 3s;
+-moz-animation: fadeIn ease 3s;
+-o-animation: fadeIn ease 3s;
+-ms-animation: fadeIn ease 3s;
+}
+.slidetop {
+  animation-duration: 4s;
+  animation-name: fadein;
+  animation-iteration-count: 1;
+}
+@keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+div.dropdown-menu.show {
+  background-color: #4b4b4b;
+}
+
+div.dropdown-menu.show a.dropdown-item {
+  color: #e1e1e1;
+}
+
+div.dropdown-menu.show span.dropdown-item-text {
+  color: #e1e1e1;
+}
+
+div.dropdown-menu.show div.dropdown-divider {
+  border-top: 1px solid rgba(50, 50, 50, 0.9);
+}
+
+div.dropdown-menu.show a.dropdown-item:hover,
+div.dropdown-menu.show a.dropdown-item:focus {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+@keyframes slideinR {
+  0% {
+    margin-right: 100%;
+    opacity: 0%;
+  }
+  80% {
+    opacity: 100%;
+  }
+  100% {
+    margin-right: 0%;
+  }
+}
+@keyframes slideinT {
+  0% {
+    margin-top: 100%;
+    opacity: 0%;
+  }
+  99% {
+    opacity: 100%;
+  }
+  100% {
+    margin-top: 0%;
+  }
+}
+#sidebar.active {
+  margin-left: -17rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -17rem;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #content {
+    width: 100%;
+    margin: 0;
+  }
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+}
