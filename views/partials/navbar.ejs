@@ -1,0 +1,42 @@
+<style>
+.avatar>img, .img-avatar, .img-circle {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50em;
+}
+.app-header .nav-item .avatar.nav-link>img, .app-header .nav-item .nav-link>.img-avatar {
+    height: 35px;
+    margin: 0 10px;
+}
+</style>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#" style="position:absolute;width:100%;left:0;text-align:center;z-index:1;">Corius</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navbar">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" style="z-index:2;">
+  <div class="navbar-nav mr-auto">
+    <a class="nav-item nav-link" href="/">Home</a>
+    <a class="nav-item nav-link" href="/servers">Servers</a>
+  </div>
+  <div class="navbar-nav ml-auto">
+    <% if(!user) {%>
+      <a class="nav-item nav-link" href="/login">Login</a>
+    <%} else {%>
+      <div class="dropdown">
+      <a class="nav-item nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div class="d-none d-sm-inline-block"><strong style="color: rgb(254, 254, 254);"><%- user.username %></strong>#<%- user.discriminator %></div>
+        <img src="<%- user.avatarURL %>?size=32" class="img-avatar">
+      </a>
+        <div class="dropdown-menu" aria-labelledby="menuDropdown">
+        <span class="dropdown-item-text text-center">Actions</span>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/servers">Servers</a>
+        <a class="dropdown-item" href="/logout">Log Out</a>
+     </div>
+    </div>
+
+    <%} %>
+  </div>
+  </div>
+</nav>

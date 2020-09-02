@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ("../partials/head.ejs") %>
+  <link rel= "stylesheet" href= "/css/style.css">
+  <link rel="stylesheet" href="/css/ccmd.css">
+  <script src="/js/ccmd.js"></script>
+</head>
+  <body class="slideright">
+    <%- include("../partials/navbar.ejs") %>
+    <div class="card text-white bg-dark col-sm-10 offset-sm-1">
+      <div class="card-body m-2 center col">
+      <h2 class="text-center">
+         Custom Commands for <%-server.name%></b>
+      </h2>
+    </div>
+    <h3>Please select a command or create a new one:</h3>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="newcmd">Create a new custom command</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="createCmd" action="/" method="post">
+          <label for="name">Name of command: </label><br>
+          <input type="text" name="name" placeholder="Command Name Here">  
+          <label for="description">Description of command:</label><br>
+          <input name="description" placeholder="Description of command">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <%if(commands){commands.forEach(async command=> { %>
+<div id="myDiv" name="myDiv" title="Example Div Element" style="color: #0900C4; font: Helvetica 12pt;border: 1px solid black;">
+  <h5><%-command.name%>></h5>
+  <p><strong><%-command.syntax%></strong></p>
+  <p><%-command.description%></p>
+</div>
+    <% })}; %>
+  </body>

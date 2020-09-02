@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ("partials/head.ejs") %>
+  <link rel= "stylesheet" href= "css/style.css">
+</head>
+  <body class="fade-in">
+    <%- include("partials/navbar.ejs") %>
+    <div class="card text-white bg-dark col-sm-10 offset-sm-1">
+      <div class="card-body">
+      <h2 class="text-center">
+         Hello <%= user.username %>! Please pick a server:</b>
+      </h2>
+      <hr>
+      <div class="row justify-content-center">
+        <% servers.forEach(async server=>{ %>
+          <div class="row">
+            <div class="m-2 center col">
+              <% if(server.hasBot) {%>
+              <a href="/dashboard/<%=server.id%>">
+                <img src="<%- server.iconURL %>" alt="" height="128" width="128" title="click to access server dashboard" 
+                     style="cursor: pointer; border-radius: 50%; border: 3px solid rgb(106, 255, 170);" role="button">
+              </a>
+              <p class="text-center">
+                <%= server.name %>
+              </p> 
+              <% } else { %>
+              <a href="https://discord.com/api/oauth2/authorize?client_id=708021672619540590&permissions=8&redirect_uri=https%3A%2F%2Fcorius.glitch.me%2Fservers&scope=bot&guild_id=<%=server.id%>&disable_guild_select=true">
+                <img src="<%- server.iconURL %>" alt="" height="128" width="128" title="Not yet invited, click to invite" 
+                     style="cursor: pointer; border-radius: 50%; border: 3px solid rgb(106, 255, 170); filter: grayscale(100%);" role="button"> 
+              </a>
+                <p class="text-center">
+                   <%= server.name %> 
+                </p>
+              <% } %>
+            </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+
+    
+  </body>
+</html>

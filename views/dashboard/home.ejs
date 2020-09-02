@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ("../partials/head.ejs") %>
+  <link rel= "stylesheet" href= "/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+  <body class="slideright">
+   <%- include("../partials/navbar.ejs") %>
+    <div class="card text-white bg-dark col-sm-10 offset-sm-1">
+      <div class="card-body">
+      <h2 class="text-center">
+         Welcome to the dashboard for <%= server.name %>!</b>
+      </h2>
+    </div>
+    <h3>Please select a module to continue:</h3>
+    <div class="row justify-content-center" style="border: none">
+      <div class="row justify-content-center">
+        <a href="/dashboard/<%=server.id%>/customcommand">
+      <button class="modubtn">
+        Custom Commands
+      </button>
+        </a>
+      </div>
+      <div class="row justify-content-center">
+        <a href="/dashboard/<%=server.id%>/guildconfig">
+      <button class="modubtn">
+        Server Settings
+      </button>
+        </a>
+      </div>
+      <button class="modubtn" id="j">j</button>
+    </div>
+    <script type="text/javascript">
+      
+      const buttons = document.querySelectorAll(".modubtn");
+      buttons.forEach(btn => {
+        btn.addEventListener("click", function(e) {
+        })
+      })
+      </script> 
+  </body>

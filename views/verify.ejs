@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<%-include("partials/head.ejs")%>
+</head>
+<body>
+<div class="center">
+<div id="progress">
+<p>Verifying. Please wait...</p>
+<div class="spinner">
+<div class="cube1"></div>
+<div class="cube2"></div>
+</div>
+</div>
+</div>
+<div class="center">
+<div id="success" style="display: none;">
+<p>Verification successful. You may now close this window.</p>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+<circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"></circle>
+<polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "></polyline>
+</svg>
+</div>
+</div>
+<div class="center">
+<div id="fail" style="display: none;">
+<p id="fail-reason">Verification failed! Please try again later.</p>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+<circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"></circle>
+<line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"></line>
+<line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"></line>
+</svg>
+</div>
+</div>
+<div class="g-recaptcha" data-sitekey="6LdgKaUZAAAAAEti6ph8STGP4f8Sd3_w0URe-xm3" data-callback="onSubmit" data-size="invisible"></div>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src='https://www.google.com/recaptcha/api.js?onload=onLoadCallBack' async defer></script>
+<script>
+    var token = "<%-code%>";
+    var status = "<%-status%>"
+
+    function onLoadCallBack() {
+        if (status == "ok") {
+            grecaptcha.execute();
+        } else if (status == "invalid") {
+            $('#progress').fadeOut();
+            $('#fail-reason').text("This link is invalid.");
+            $('#fail').fadeIn();
+        } else if (status == "blocked") {
+            $('#progress').fadeOut();
+            $('#fail-reason').html("Detected Proxy/VPN connection. Please disable them and try again.</a>");
+            $('#fail').fadeIn();
+        } else {
+            $('#progress').fadeOut();
+            $('#fail-reason').text("Something went wrong. Try again later. Error: " + status);
+            $('#fail').fadeIn();
+        }
+    }
+
+    var func = function () {
+        var element = document.querySelector("div[style*='visibility']");
+        if (element != null) {
+            element.addEventListener("click", function () {
+                grecaptcha.execute();
+            }, false);
+            clearInterval(id)
+        }
+    };
+
+    var id = setInterval(func, 500);
+
+    function onSubmit(reCaptchaToken) {
+        $.ajax({
+            url: location.protocol + "//" + location.host + "/api/verify/INVISIBLE_RECAPTCHA/" + token + "/" + reCaptchaToken,
+            dataType: "json"
+        }).then(function (result) {
+            $('#progress').fadeOut();
+
+            if (result.ok) {
+                $('#success').fadeIn();
+            }
+            else if (result.isBlocked) {
+                $('#fail-reason').html("Detected Proxy/VPN connection. Please disable them and try again.</a>");
+                $('#fail').fadeIn();
+            }
+            else {
+                $('#fail').fadeIn();
+            }
+        })
+    }
+</script>
+<style>
+    body {
+        font-family: 'Titillium Web', sans-serif;
+        background-color: #2c2f33;
+        color: lightgray;
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        -webkit-transform: translateY(-50%) translateX(-50%);
+    }
+
+    .spinner {
+        margin: 50px auto;
+        width: 40px;
+        height: 40px;
+        position: relative;
+    }
+
+    .cube1, .cube2 {
+        background-color: #fff;
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
+        animation: sk-cubemove 1.8s infinite ease-in-out;
+    }
+
+    .cube2 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+    }
+
+    @-webkit-keyframes sk-cubemove {
+        25% {
+            -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5)
+        }
+        50% {
+            -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg)
+        }
+        75% {
+            -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5)
+        }
+        100% {
+            -webkit-transform: rotate(-360deg)
+        }
+    }
+
+    @keyframes sk-cubemove {
+        25% {
+            transform: translateX(42px) rotate(-90deg) scale(0.5);
+            -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+        }
+        50% {
+            transform: translateX(42px) translateY(42px) rotate(-179deg);
+            -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+        }
+        50.1% {
+            transform: translateX(42px) translateY(42px) rotate(-180deg);
+            -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+        }
+        75% {
+            transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+            -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+        }
+        100% {
+            transform: rotate(-360deg);
+            -webkit-transform: rotate(-360deg);
+        }
+    }
+
+    svg {
+        width: 100px;
+        display: block;
+        margin: 40px auto 0;
+    }
+
+    .path {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 0;
+    }
+
+    .path.circle {
+        -webkit-animation: dash 0.9s ease-in-out;
+        animation: dash 0.9s ease-in-out;
+    }
+
+    .path.line {
+        stroke-dashoffset: 1000;
+        -webkit-animation: dash 0.9s 0.35s ease-in-out forwards;
+        animation: dash 0.9s 0.35s ease-in-out forwards;
+    }
+
+    .path.check {
+        stroke-dashoffset: -100;
+        -webkit-animation: dash-check 0.9s 0.35s ease-in-out forwards;
+        animation: dash-check 0.9s 0.35s ease-in-out forwards;
+    }
+
+    p.success {
+        color: #73AF55;
+    }
+
+    p.error {
+        color: #D06079;
+    }
+
+    @-webkit-keyframes dash {
+        0% {
+            stroke-dashoffset: 1000;
+        }
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    @keyframes dash {
+        0% {
+            stroke-dashoffset: 1000;
+        }
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    @-webkit-keyframes dash-check {
+        0% {
+            stroke-dashoffset: -100;
+        }
+        100% {
+            stroke-dashoffset: 900;
+        }
+    }
+
+    @keyframes dash-check {
+        0% {
+            stroke-dashoffset: -100;
+        }
+        100% {
+            stroke-dashoffset: 900;
+        }
+    }
+
+    _:-ms-lang(x), .path {
+        stroke-dasharray: 0 !important;
+        stroke-dashoffset: 0 !important;
+    }
+</style>
