@@ -18,7 +18,6 @@ client.verifications = new Enmap("verifications");
 client.verifiedUsers = new Enmap("verifiedUsers");
 client.xp = new XPManager("xp");
 
-
 const defaultSettingsConfig = {
   prefix: ".",
   welcome: `Hi there {{user}}, welcome too {{guild}}`,
